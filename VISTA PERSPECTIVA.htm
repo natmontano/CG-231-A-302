@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Titulo</title>
+        <style>
+            html, body { margin: 0; padding: 0; overflow: hidden; }
+            #text {
+                position: absolute;
+                padding: 10px;
+                width: 100%;
+                text-align: center;
+                color: #000000;
+            }
+        </style>
+	</head>
+	<body>
+		<div id="text">	VISTA PERSPECTIVA<br/>
+            NATALIA MONTAÑO<br/>
+        </div>
+	</body>
+    </html>
+		<script src="https://threejs.org/build/three.js"></script>
+		<script>
+
+			//Escena
+			const scene = new THREE.Scene(); 
+			const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+			const renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setClearColor(0xFFFFFF, 1.0);
+			document.body.appendChild( renderer.domElement );
+			
+			//Geometria del rectangulo
+			const Rec = [[2,2,2],[2,2,2],[2,2,2]];
+			var geometry=[];
+			for (let i=0; i<1;i++){
+				geometry.push(new THREE.BoxGeometry(Rec[i][0]));
+			}
+
+            //Color del rectangulo
+			const color=[0x58EDED];
+
+			//Material del rectangulo
+			const material=[new THREE.MeshDistanceMaterial({color:color[0]})];
+			
+            //Arreglo para agregar el rectangulo a la escena
+			const Rect=[];
+			for (let i=0; i<1;i++){
+				Rect.push(new THREE.Mesh( geometry[i], material[i] ));
+			}
+			for (let i=0; i<1;i++){
+				//Agregar el rectangulo a la escena
+				scene.add(Rect[i]);
+			}
+
+
+            //Posicion de la camara
+			camera.position.z = 5;
+
+            //Funcion de animacion para la rotacion del rectangulo 
+			function animate() {
+				requestAnimationFrame( animate );
+
+                //Rotacion Rect del centro
+				Rect[0].rotation.x += 0.01;
+				Rect[0].rotation.y += 0.01;
+
+			    //agregar a la escena
+				renderer.render( scene, camera );
+
+			};
+			animate();
+		</script>
+	</body>
+</html>
